@@ -118,6 +118,8 @@ and modify the parameters for your project.
 
 ### Step 5. Run the pipeline
 
+Run the complete workflow by executing
+
 ```r
 source("main.R")
 ```
