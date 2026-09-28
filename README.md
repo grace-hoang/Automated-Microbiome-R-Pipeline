@@ -25,18 +25,12 @@ Follow the steps below to run this pipeline.
 Clone the repository
 
 ```bash
-git clone https://github.com/your_username/AutoMicrobiomeR.git
+git clone https://github.com/grace-hoang/Automated-Microbiome-R-Pipeline.git
 ```
 
 or download it as a ZIP file from GitHub and extract it.
 
 Open R or RStudio and set the working directory to the pipeline folder.
-
-Example:
-
-```r
-setwd("C:/Users/Grace_Hoang/OneDrive/Desktop/bioinfor/AutoMicrobiomeR")
-```
 
 ---
 
