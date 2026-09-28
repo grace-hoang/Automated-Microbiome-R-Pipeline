@@ -1,35 +1,54 @@
 # Automated Microbiome R pipeline
 
-A reproducible, modular, and automated R pipeline for analyzing bacterial 16S rRNA amplicon sequencing data using the DADA2 workflow.
-
-The pipeline performs end-to-end microbiome analysis, including quality control, ASV inference, taxonomic assignment, phylogenetic tree construction, diversity analysis, differential abundance testing, and publication-ready visualization.
+A reproducible and automated R pipeline for end-to-end analysis of bacterial 16S rRNA amplicon sequencing data.
 
 ---
 
 ## Features
 
-- Fully implemented in native R
-- Modular workflow with independent scripts
-- Automatic quality filtering and truncation length selection
-- DADA2 ASV inference
-- SILVA taxonomic assignment
-- Phyloseq object construction
-- Phylogenetic tree generation
-- Alpha and beta diversity analyses
-- Relative abundance visualization
-- ANCOM-BC differential abundance analysis
-- Intermediate object caching for workflow resumption
-- Publication-ready figures and tables
+- Runs the complete DADA2 workflow from raw FASTQ files to final results.
+- Performs ASV inference with DADA2 and taxonomic assignment using SILVA.
+- Automatically determines read truncation lengths from sequencing quality.
+- Supports automatic rarefaction depth selection.
+- Performs diversity analyses with Wilcoxon, Kruskal–Wallis, PERMANOVA, and related tests.
+- Automatically generates and saves all analysis results, figures, and tables.
+- Saves intermediate results so interrupted analyses can be resumed.
 
 ---
 
-## Requirements
+## Quick Start
 
-### R
+Follow the steps below to run this pipeline.
 
-R ≥ 4.3
+### Step 1. Download the pipeline
 
-### External software
+Clone the repository
+
+```bash
+git clone https://github.com/your_username/AutoMicrobiomeR.git
+```
+
+or download it as a ZIP file from GitHub and extract it.
+
+Open R or RStudio and set the working directory to the pipeline folder.
+
+Example:
+
+```r
+setwd("C:/Users/Grace_Hoang/OneDrive/Desktop/bioinfor/AutoMicrobiomeR")
+```
+
+---
+
+### Step 2. Install dependencies
+
+Install all required R packages
+
+```r
+source("00_install_packages.R")
+```
+
+This script checks your system and installs only the missing CRAN and Bioconductor packages.
 
 Primer removal requires **cutadapt**.
 
@@ -47,139 +66,66 @@ conda install -c bioconda cutadapt
 
 ---
 
-## Installation
+### Step 3. Prepare your project directory
 
-### Install all required R packages by running
+Download the **SILVA v138.2 DADA2 training set**
 
-```r
-source("00_install_packages.R")
-```
-
-This script only installs missing packages.
-
-### Download the SILVA reference database
-
-This pipeline uses the **SILVA v138.2 DADA2 training set** for taxonomic assignment.
-
-Download:
-
-```
+```text
 silva_nr99_v138.2_toGenus_trainset.fa.gz
 ```
 
-Place the file in:
+Create a metadata file (`metadata.csv`) containing one row per sample. The `SampleID` column must match the sample names in your FASTQ files. Additional columns can be included for experimental variables used in downstream analyses (e.g., treatment, location, or time point).
+
+Example:
 
 ```text
-project_dir/
+SampleID,Group,Location
+Sample1,Control,SiteA
+Sample2,Treatment,SiteA
+Sample3,Control,SiteB
+Sample4,Treatment,SiteB
+```
+
+Organize your project directory as follows:
+
+```text
+My_Project/
+│
+├── fastqs/
+│   ├── Sample1_R1.fastq.gz
+│   ├── Sample1_R2.fastq.gz
+│   └── ...
+│
+├── metadata.csv
+│
 └── Silva/
     └── silva_nr99_v138.2_toGenus_trainset.fa.gz
 ```
 
 ---
 
-## Configuration
+### Step 4. Configure the pipeline
 
-All user-editable parameters are stored in
+Open
 
 ```text
 R/00_parameters.R
 ```
 
-This file contains all user-configurable settings, including:
-
-- **General pipeline options** 
-- **Project directory** (`project_dir`)
-- **FASTQ input folders** (`fastq_dirs`)
-- **Sample metadata** (`group_column`, `group_levels`, `reference_group`)
-- **SILVA taxonomy reference** (`silva_ref_path`)
-- **Primer sequences** (`primer_fwd`, `primer_rev`)
-- **DADA2 parameters** 
-- **Taxonomic filtering** 
-- **Rarefaction settings** 
-- **Alpha and beta diversity settings**
-- **Relative abundance thresholds**
-- **Output directories**
-
-For most users, only the following parameters typically need to be modified:
-
-- `project_dir`
-- `fastq_dirs`
-- `group_column`
-- `group_levels`
-- `reference_group`
-- `silva_ref_path`
-- `primer_fwd`
-- `primer_rev`
-
-The remaining parameters can usually be left at their default values unless a different analysis strategy is required.
+and modify the parameters for your project.
 
 ---
 
-## Set the working directory
-
-Before running the pipeline, set the working directory to the folder containing the pipeline files.
-
-Example:
-
-```r
-setwd("C:/Users/Grace_Hoang/OneDrive/Desktop/bioinfor/R_pipeline")
-```
-
----
-
-## Running the pipeline
-
-Run the complete workflow
+### Step 5. Run the pipeline
 
 ```r
 source("main.R")
 ```
 
-or execute individual modules independently.
+All results are automatically saved to
 
-For example
-
-```r
-source("R/13_alpha_diversity.R")
-```
-
-When running individual scripts, first load
-
-```r
-source("R/00_parameters.R")
-source("R/01_helper_functions.R")
-```
-
-and ensure the required intermediate `.rds` files have been generated.
-
----
-
-## Workflow
-
-1. Helper functions
-2. Quality profiles
-3. Primer removal
-4. Read filtering and trimming
-5. Error model learning
-6. Denoise and merge
-7. Chimera removal
-8. Read tracking
-9. Taxonomic assignment
-10. Phyloseq object construction
-11. Phylogenetic tree construction
-12. Rarefaction
-13. Alpha diversity
-14. Beta diversity
-15. Relative abundance analysis
-16. Differential abundance analysis (ANCOM-BC)
-
----
-
-## Output structure
-
-```
+```text
 results/
-│
 ├── figures/
 ├── tables/
 ├── rds/
@@ -210,11 +156,13 @@ results/
 
 ---
 
-## Reproducibility
+## Resume Interrupted Runs
 
-The pipeline caches intermediate results as `.rds` files to avoid recomputing completed steps.
+Intermediate results are automatically saved as `.rds` files.
 
-To ignore cached files and rerun the entire workflow, set
+If the pipeline is interrupted, completed steps are loaded from these files instead of being recomputed, allowing the analysis to resume from the last completed stage.
+
+To rerun the entire workflow from scratch, set
 
 ```r
 FORCE_RERUN <- TRUE
