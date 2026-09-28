@@ -1,4 +1,4 @@
-# 
+# Automated Microbiome R pipeline
 
 A reproducible, modular, and automated R pipeline for analyzing bacterial 16S rRNA amplicon sequencing data using the DADA2 workflow.
 
@@ -212,20 +212,12 @@ results/
 
 ## Reproducibility
 
-Intermediate results are automatically cached as `.rds` objects.
+The pipeline caches intermediate results as `.rds` files to avoid recomputing completed steps.
 
-If the pipeline is interrupted, completed stages are loaded from cache rather than recomputed.
-
-To rerun the complete workflow, set
+To ignore cached files and rerun the entire workflow, set
 
 ```r
 FORCE_RERUN <- TRUE
 ```
 
-in
-
-```text
-R/00_parameters.R
-```
-
-
+in `R/00_parameters.R`.
