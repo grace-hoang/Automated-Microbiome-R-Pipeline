@@ -3,8 +3,18 @@
 suppressPackageStartupMessages({
   library(tidyverse)
 })
+# Output files -------------------------------------------------------------------------------------------------------
+dir_results <- "result"
+dir_figures <- file.path(dir_results, "figures")
+dir_tables  <- file.path(dir_results, "tables")
+dir_rds     <- file.path(dir_results, "rds")
+dir_logs    <- file.path(dir_results, "logs")
 
-# Resume the pipeline/avoid recomputing completed steps-------------------------
+for (d in c(dir_results, dir_figures, dir_tables, dir_rds, dir_logs)) {
+  dir.create(d, recursive = TRUE, showWarnings = FALSE)
+}
+
+# Resume the pipeline/avoid recomputing completed steps----------------------------------------------------------------
 # A cached result is reused ONLY if it was produced with the same parameters and the same upstream inputs. 
 fingerprint_path <- function(path) paste0(path, ".hash")
 
