@@ -2,7 +2,7 @@
 
 stage_scripts <- c(
   "R/00_parameters.R",          # user-editable settings (paths, primers, thresholds)
-  "R/01_helper_functions.R",    # small shared helper functions
+  "R/01_helpers.R",             # small shared helpers
   "R/02_quality_profiles.R",    # raw read quality profile plots
   "R/03_primer_removal.R",      # cutadapt primer trimming
   "R/04_filter_trim.R",         # automatic trunclen + DADA2 filterAndTrim
