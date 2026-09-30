@@ -119,14 +119,3 @@ permanova_permutations <- 999
 min_phylum_abundance <- 0.01
 min_genus_abundance  <- 0.02
 
-# Output -----------------------------------------------------------------------
-
-dir_results <- "result"
-dir_figures <- file.path(dir_results, "figures")
-dir_tables  <- file.path(dir_results, "tables")
-dir_rds     <- file.path(dir_results, "rds")
-dir_logs    <- file.path(dir_results, "logs")
-
-for (d in c(dir_results, dir_figures, dir_tables, dir_rds, dir_logs)) {
-  dir.create(d, recursive = TRUE, showWarnings = FALSE)
-}
