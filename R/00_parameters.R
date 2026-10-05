@@ -99,7 +99,7 @@ custom_rarefaction_depth <- 10000
 max_sample_loss <- 0.10
 
 ## Plateau gain threshold 
-plateau_gain    <- 0.01
+plateau_gain    <- 0.02
 
 ## Minimum samples reaching plateau
 plateau_samples <- 0.90

@@ -23,9 +23,9 @@ metadata_df <- metadata_df[match(sample_names(physeq_rarefied), metadata_df$Samp
 metadata_df[[group_column]] <- droplevels(factor(metadata_df[[group_column]]))
 
 distance_labels <- c(
-  bray      = "Bray-Curtis",
-  wunifrac  = "Weighted UniFrac",
-  unifrac   = "Unweighted UniFrac"
+  bray     = "Bray-Curtis",
+  wunifrac = "Weighted UniFrac",
+  unifrac  = "Unweighted UniFrac"
 )
 
 permanova_results  <- list()
@@ -50,14 +50,39 @@ for (dist_method in beta_distances) {
     distance = dist_matrix
   )
   
+  # Check whether all groups have at least 3 samples
+  group_counts <- table(metadata_df[[group_column]])
+  draw_ellipses <- all(group_counts >= 3)
+  
   pcoa_plot <- plot_ordination(
     physeq_rarefied,
     ordination,
     color = group_column
   ) +
-    stat_ellipse(type = "norm", linetype = 2) +
     labs(title = paste("PCoA -", distance_labels[[dist_method]])) +
-    theme_bw(base_size = 13)
+    theme_bw(base_size = 14) +
+    theme(
+      plot.title   = element_text(size = 14),
+      axis.title   = element_text(size = 14),
+      axis.text    = element_text(size = 14),
+      legend.title = element_text(size = 14),
+      legend.text  = element_text(size = 14)
+      )
+  
+  if (draw_ellipses) {
+    
+    pcoa_plot <- pcoa_plot +
+      stat_ellipse(type = "norm", linetype = 2)
+    
+  } else {
+    
+    message(
+      "Confidence ellipses were omitted for ",
+      distance_labels[[dist_method]],
+      " because one or more groups contain fewer than 3 samples after rarefaction."
+    )
+    
+  }
   
   save_plot(pcoa_plot, paste0("pcoa_", dist_method))
   
@@ -90,6 +115,7 @@ for (dist_method in beta_distances) {
     as.data.frame(disper_test$tab) %>%
     rownames_to_column("term") %>%
     mutate(distance = distance_labels[[dist_method]], .before = 1)
+  
 }
 
 write.csv(

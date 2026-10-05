@@ -181,10 +181,10 @@ alpha_plot <- ggplot(alpha_long, aes(x = .data[[group_column]], y = Value, fill 
     y = "Diversity Metric Value",
     fill = group_column
   ) +
-  theme_bw(base_size = 13) +
+  theme_bw(base_size = 12) +
   theme(
     strip.background = element_rect(fill = "#f8f9fa", color = "#dcdde1"),
-    strip.text       = element_text(face = "bold", size = 11),
+    strip.text       = element_text(),
     axis.text.x      = element_text(angle = if (n_groups > 3) 45 else 0, hjust = if (n_groups > 3) 1 else 0.5),
     legend.position  = "none" # Redundant with x-axis labels
   )

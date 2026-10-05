@@ -18,41 +18,41 @@ A reproducible and automated R pipeline for end-to-end analysis of bacterial 16S
 
 ## Quick Start
 
-Follow the steps below to run this pipeline.
+Follow the steps below to run the pipeline.
 
 ### Step 1. Download the pipeline
 
-Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/grace-hoang/Automated-Microbiome-R-Pipeline.git
 ```
 
-or download it as a ZIP file from GitHub and extract it.
+Alternatively, download the repository as a ZIP file from GitHub and extract it.
 
-Open R or RStudio and set the working directory to the pipeline folder.
+Open **R** or **RStudio**, then set the working directory to the `Automated-Microbiome-R-Pipeline` folder.
 
 ---
 
 ### Step 2. Install dependencies
 
-Install all required R packages
+Install all required R packages:
 
 ```r
-source("00_install_packages.R")
+source("R/00_install_packages.R")
 ```
 
-This script checks your system and installs only the missing CRAN and Bioconductor packages.
+This script automatically checks your system and installs any missing CRAN and Bioconductor packages.
 
-Primer removal requires **cutadapt**.
+Primer removal requires **Cutadapt**. Install it using either:
 
-Install using pip
+**pip**
 
 ```bash
 pip install cutadapt
 ```
 
-or conda
+or **conda**
 
 ```bash
 conda install -c bioconda cutadapt
@@ -62,13 +62,13 @@ conda install -c bioconda cutadapt
 
 ### Step 3. Prepare your project directory
 
-Download the **SILVA v138.2 DADA2 training set**
+Download the **SILVA v138.2 DADA2 training set**:
 
 ```text
 silva_nr99_v138.2_toGenus_trainset.fa.gz
 ```
 
-Create a metadata file (`metadata.csv`) containing one row per sample. The `SampleID` column must match the sample names in your FASTQ files. Additional columns can be included for experimental variables used in downstream analyses (e.g., treatment, location, or time point).
+Create a metadata file (`metadata.csv`) containing one row per sample. The `SampleID` column must exactly match the sample names in the FASTQ files. Additional columns may be included for downstream analyses (e.g., treatment, habitat, location, or sampling time).
 
 Example:
 
@@ -100,25 +100,25 @@ My_Project/
 
 ### Step 4. Configure the pipeline
 
-Open
+Open:
 
 ```text
 R/00_parameters.R
 ```
 
-and modify the parameters for your project.
+Modify the project-specific parameters, including input paths, metadata, taxonomy database, filtering options, and analysis settings.
 
 ---
 
 ### Step 5. Run the pipeline
 
-Run the complete workflow by executing
+Execute the complete workflow:
 
 ```r
 source("main.R")
 ```
 
-All results are automatically saved to
+All outputs are automatically saved to:
 
 ```text
 results/
@@ -127,8 +127,6 @@ results/
 ├── rds/
 └── logs/
 ```
-
----
 
 ## Pipeline stages
 

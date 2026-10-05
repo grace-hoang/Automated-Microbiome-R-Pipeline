@@ -128,3 +128,22 @@ physeq <- load_or_compute(
     file.path(dir_rds, "fastq_info.rds")
   )
 )
+
+# Add final reads after taxonomic filtering/decontam ---------------------------
+
+read_tracking <- readRDS(file.path(dir_rds, "read_tracking.rds"))
+
+final_reads <- sample_sums(physeq)
+
+read_tracking$decontam <-
+  final_reads[rownames(read_tracking)]
+
+saveRDS(
+  read_tracking,
+  file.path(dir_rds, "read_tracking.rds")
+)
+
+write.csv(
+  read_tracking,
+  file.path(dir_tables, "read_tracking.csv")
+)

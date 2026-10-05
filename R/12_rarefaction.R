@@ -106,7 +106,7 @@ if (rarefaction_mode == "min") {
     target_depth <- best_row$depth
     
     message(sprintf(
-      "Auto-yield optimal: %d reads | Retains %d/%d samples (%.1f%%) | %.1f%% at plateau.",
+      "Optimal rarefaction depth: %d reads | Retains %d/%d samples (%.1f%%) | %.1f%% at plateau.",
       best_row$depth,
       best_row$samples_kept,
       n_total,
@@ -117,14 +117,14 @@ if (rarefaction_mode == "min") {
   } else {
     
     warning(
-      "Plateau criterion not met. Falling back to maximum yield under the sample-retention constraint."
-    )
+      "No depth satisfied the richness-saturation criterion. Selecting the highest-yield depth while retaining the required number of samples."
+      )
     
     best_row <- opt_df[which.max(opt_df$yield), ]
     target_depth <- best_row$depth
     
     message(sprintf(
-      "Fallback depth: %d reads | Retains %d/%d samples (%.1f%%).",
+      "Selected depth: %d reads | Retains %d/%d samples (%.1f%%).",
       best_row$depth,
       best_row$samples_kept,
       n_total,
@@ -145,9 +145,10 @@ if (rarefaction_mode == "min") {
 
 n_kept <- sum(depths >= target_depth)
 
+# Creating pdf
 pdf(
   file.path(dir_figures, "rarefaction_curve.pdf"),
-  width = 6.5,
+  width = 7,
   height = 5.5
 )
 
@@ -160,13 +161,17 @@ vegan::rarecurve(
   label = FALSE,
   xlab = "Sequencing Depth (Reads)",
   ylab = "Expected ASVs",
-  main = "Rarefaction Curves"
+  main = "Rarefaction Curves",
+  cex.main = 1.4,
+  cex.lab = 1.4,
+  cex.axis = 1.4
 )
 
 abline(v = target_depth, col = "#e74c3c", lwd = 2, lty = 2)
 
 legend(
-  "bottomright",
+  "topright",
+  inset = c(0, 0.08),
   legend = c(
     sprintf("Selected depth: %s reads",
             format(target_depth, big.mark = ",")),
@@ -178,14 +183,15 @@ legend(
   lty = c(2, NA),
   lwd = c(2, NA),
   bty = "n",
-  cex = 0.85
+  cex = 1.4
 )
 
 dev.off()
 
+# Creating png 
 png(
   file.path(dir_figures, "rarefaction_curve.png"),
-  width = 6.5,
+  width = 7,
   height = 5.5,
   units = "in",
   res = 300
@@ -200,13 +206,17 @@ vegan::rarecurve(
   label = FALSE,
   xlab = "Sequencing Depth (Reads)",
   ylab = "Expected ASVs",
-  main = "Rarefaction Curves"
+  main = "Rarefaction Curves",
+  cex.main = 1.4,
+  cex.lab = 1.4,
+  cex.axis = 1.4
 )
 
 abline(v = target_depth, col = "#e74c3c", lwd = 2, lty = 2)
 
 legend(
-  "bottomright",
+  "topright",
+  inset = c(0, 0.08),
   legend = c(
     sprintf("Selected depth: %s reads",
             format(target_depth, big.mark = ",")),
@@ -218,7 +228,7 @@ legend(
   lty = c(2, NA),
   lwd = c(2, NA),
   bty = "n",
-  cex = 0.85
+  cex = 1.4
 )
 
 dev.off()

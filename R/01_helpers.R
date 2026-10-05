@@ -61,7 +61,7 @@ load_or_compute <- function(path, compute_fun, params = list(),
 }
 
 # Set plot format --------------------------------------------------------------
-save_plot <- function(plot, filename, width = 8, height = 6) {
+save_plot <- function(plot, filename, width = 6.5, height = 5) {
   ggplot2::ggsave(file.path(dir_figures, paste0(filename, ".pdf")),
                    plot = plot, width = width, height = height)
   ggplot2::ggsave(file.path(dir_figures, paste0(filename, ".png")),

@@ -161,11 +161,11 @@ abundance_barplot <- function(data, taxrank, palette) {
       y = "Relative abundance"
     ) +
     guides(fill = guide_legend(ncol = legend_ncol, byrow = FALSE)) +
-    theme_bw(base_size = 13) +
+    theme_bw(base_size = 14) +
     theme(
       axis.text.x = element_text(angle = 45, hjust = 1),
-      legend.text = element_text(size = 9),
-      legend.key.size = unit(0.4, "cm"),
+      legend.text = element_text(size = 12),
+      legend.key.size = unit(0.5, "cm"),
       plot.margin = margin(10, 20, 10, 10)
     )
 }
