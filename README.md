@@ -62,13 +62,13 @@ conda install -c bioconda cutadapt
 
 ### Step 3. Prepare your project directory
 
-# Download the **SILVA v138.2 DADA2 training set**:
+Download the **SILVA v138.2 DADA2 training set**:
 
 ```text
 silva_nr99_v138.2_toGenus_trainset.fa.gz
 ```
 
-# Creating `metadata.csv`
+Creating `metadata.csv`:
 
 Create a file named **`metadata.csv`**, then save it as a **CSV (Comma delimited) (*.csv)** file.
 
@@ -101,7 +101,7 @@ In this example:
 - `group_column = "Group"` tells the pipeline to use the **Group** column.
 - `reference_group = "Lagoon_Amuricata"` sets **Lagoon_Amuricata** as the baseline group for differential abundance analysis.
 
-# Organize your project directory as follows:
+Organize your project directory as follows:
 
 ```text
 My_Project/
