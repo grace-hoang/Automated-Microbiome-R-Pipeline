@@ -154,9 +154,9 @@ results/
 
 Looking for an easy-to-use graphical interface?
 
-➡ **Databio16S**
+**Databio16S**
 https://github.com/grace-hoang/Databio16S
 
-Databio16S provides a Windows desktop application that runs the Automated Microbiome R Pipeline without requiring users to work with R scripts directly.
+Databio16S provides a Windows desktop application that enables researchers to run the Automated Microbiome R Pipeline without using the command line.
 
 
