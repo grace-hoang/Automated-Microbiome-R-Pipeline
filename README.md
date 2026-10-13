@@ -68,17 +68,38 @@ Download the **SILVA v138.2 DADA2 training set**:
 silva_nr99_v138.2_toGenus_trainset.fa.gz
 ```
 
-Create a metadata file (`metadata.csv`) containing one row per sample. The `SampleID` column must exactly match the sample names in the FASTQ files. Additional columns may be included for downstream analyses (e.g., treatment, habitat, location, or sampling time).
+### Creating `metadata.csv`
+
+Create a file named **`metadata.csv`**, then save it as a **CSV (Comma delimited) (*.csv)** file.
+
+- Each **row** represents one sample.
+- Each **column** represents a sample attribute.
+- The **`SampleID`** column is required and must exactly match the sample names in your FASTQ files.
+- Add one or more columns describing your experimental groups (e.g., `Group`, `Treatment`, `Location`, `Habitat`).
 
 Example:
 
-```text
+```csv
 SampleID,Group,Location
-Sample1,Control,SiteA
-Sample2,Treatment,SiteA
-Sample3,Control,SiteB
-Sample4,Treatment,SiteB
+Sample1,Lagoon_Amuricata,Lagoon
+Sample2,Lagoon_Amuricata,Lagoon
+Sample3,Reef_Amuricata,Reef
+Sample4,Reef_Amuricata,Reef
 ```
+
+Then, in `00_parameters.R`, specify which metadata column should be used for comparisons:
+
+```r
+# Metadata column containing the groups to compare
+group_column <- "Group"
+
+# Reference group within that column
+reference_group <- "Lagoon_Amuricata"
+```
+
+In this example:
+- `group_column = "Group"` tells the pipeline to use the **Group** column.
+- `reference_group = "Lagoon_Amuricata"` sets **Lagoon_Amuricata** as the baseline group for differential abundance analysis.
 
 Organize your project directory as follows:
 
