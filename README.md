@@ -150,16 +150,13 @@ results/
 
 ---
 
-## Resume Interrupted Runs
+## Desktop Application
 
-Intermediate results are automatically saved as `.rds` files.
+Looking for an easy-to-use graphical interface?
 
-If the pipeline is interrupted, completed steps are loaded from these files instead of being recomputed, allowing the analysis to resume from the last completed stage.
+➡ **Databio16S**
+https://github.com/grace-hoang/Databio16S
 
-To rerun the entire workflow from scratch, set
+Databio16S provides a Windows desktop application that runs the Automated Microbiome R Pipeline without requiring users to work with R scripts directly.
 
-```r
-FORCE_RERUN <- TRUE
-```
 
-in `R/00_parameters.R`.
